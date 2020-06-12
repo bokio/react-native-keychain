@@ -142,11 +142,19 @@ public class KeychainModule extends ReactContextBaseJavaModule {
     addCipherStorageToMap(new CipherStorageFacebookConceal(reactContext));
     addCipherStorageToMap(new CipherStorageKeystoreAesCbc());
 
+    /**
+     * Quan - 2020-06-12: disable RSA option because it's very slow. Will back to use official repo when the bug is fixed
+     * It's slow because it tried to read/write to check if the device is support
+     * https://github.com/oblador/react-native-keychain/issues/337
+     * https://github.com/oblador/react-native-keychain/issues/314
+     */
     // we have a references to newer api that will fail load of app classes in old androids OS
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      addCipherStorageToMap(new CipherStorageKeystoreRsaEcb());
-    }
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//      addCipherStorageToMap(new CipherStorageKeystoreRsaEcb());
+//    }
   }
+
+
 
   /** Allow initialization in chain. */
   public static KeychainModule withWarming(@NonNull final ReactApplicationContext reactContext) {
